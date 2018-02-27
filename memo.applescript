@@ -47,9 +47,11 @@ if _notebook is "" then
     return
 end if
 
--- get current date string
+-- get related info
 set theDate to date string of (current date)
+set theTime to time string of (current date)
 set noteName to "备忘 - " & theDate
+set appName to "{popclip app name}"
 
 -- create new note or append data to existed note
 tell application "Evernote"
@@ -58,14 +60,14 @@ tell application "Evernote"
         set theNote to item 1 of queryResults
         set theNotebook to notebook of theNote
         if name of theNotebook equals _notebook then
-            set contentInNote to "<br /><div>" & "{popclip text}" & "</div>"
+            set contentInNote to "<br /><div>" & "{popclip text}" & "</div><div><strong><<< " & appName & " - " & theTime & "</strong></div>"
             append theNote html contentInNote
             display dialog "备忘成功添加至现有笔记！"
             return
         end if
     end if
 
-    set contentInNote to "<div>" & "{popclip text}" & "</div>"
+    set contentInNote to "<div>" & "{popclip text}" & "</div><div><strong><<< " & appName & " - " & theTime & "</strong></div>"
     create note title noteName notebook _notebook with html contentInNote
 
     display dialog "备忘成功添加至笔记本[" & _notebook & "]!"
