@@ -21,6 +21,19 @@
 			<string>memo.png</string>
 			<key>Title</key>
 			<string>Create Memo Note in Evernote</string>
+			<key>Restore Pasteboard</key>
+			<string>YES</string>
+		</dict>
+	</array>
+	<key>Options</key>
+	<array>
+		<dict>
+			<key>Option Identifier</key>
+			<string>notebook</string>
+			<key>Option Type</key>
+			<string>string</string>
+			<key>Option Label</key>
+			<string>Save in Notebook</string>
 		</dict>
 	</array>
 </dict>
