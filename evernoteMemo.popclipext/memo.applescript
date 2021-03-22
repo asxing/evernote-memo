@@ -1,5 +1,5 @@
 -- frequently used notebook
-property _notebook: ""
+property _notebook: "01-待整理"
 
 -- show user interact dialog for the first time
 if _notebook is "" then
@@ -7,8 +7,6 @@ if _notebook is "" then
     -- ask user to choose which notebook to save
     -- create new notebook or use created notebook
     try
-        set theDialog to (display dialog "请选择备忘存放的笔记本：" buttons {"新建笔记本", "已创建的笔记本"} default button "已创建的笔记本" with title "选择笔记本")
-        if button returned of theDialog = "已创建的笔记本" then
             tell application "Evernote"
                 -- get all created notebook to Notebook List
                 set notebookList to {}
@@ -22,24 +20,8 @@ if _notebook is "" then
                 if selections is not false then
                     set _notebook to item 1 of selections
                 end if
-
             end tell
-        else
-            -- ask user to input new notebook name
-            -- create new notebook with assigned name
-            set theDialog to (display dialog "命名为：" with title "创建新笔记本" default answer "")
-            if button returned of theDialog is not false then
-                set _notebook to text returned of theDialog
-                if _notebook is not "" then
-                    tell application "Evernote"
-                        create notebook _notebook
-                    end tell
-                end if
-            end if
-        end if
-
     end try
-
 end if
 
 -- if _notebook is still empty then exit
@@ -60,14 +42,13 @@ tell application "Evernote"
         set theNote to item 1 of queryResults
         set theNotebook to notebook of theNote
         if name of theNotebook equals _notebook then
-            set contentInNote to "<br /><div>" & "{popclip text}" & "</div><div><strong><<< " & appName & " - " & theTime & "</strong></div>"
+            set contentInNote to "<br /><pre>" & "{popclip text}" & "</pre><div><strong><<< " & appName & " - " & theTime & "</strong></div>"
             append theNote html contentInNote
-            display dialog "备忘成功添加至现有笔记！"
             return
         end if
     end if
 
-    set contentInNote to "<div>" & "{popclip text}" & "</div><div><strong><<< " & appName & " - " & theTime & "</strong></div>"
+    set contentInNote to "<pre>" & "{popclip text}" & "</pre><div><strong><<< " & appName & " - " & theTime & "</strong></div>"
     create note title noteName notebook _notebook with html contentInNote
 
     display dialog "备忘成功添加至笔记本[" & _notebook & "]!"
